@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WishLorn - Bienvenue{% endblock %}
+
+{% block body %}
+<main class="container col-10 p-4 mt-3 card shadow">
+<div class="jumbotron">
+  <h1 class="display-4">Bienvenue sur Wishlorn !</h1>
+  <p class="lead">Bienvenue sur Wishlorn, votre gestionnaire de listes de souhaits intuitif et convivial. Créez, partagez et suivez facilement vos envies tout au long de l'année. Avec Wishlorn, organisez vos désirs, découvrez de nouvelles idées et assurez-vous que chaque occasion spéciale soit comblée de joie. Commencez dès aujourd'hui à donner vie à vos rêves et à ceux de vos proches !</p>
+  <hr class="my-4">
+  <p>Pour commencer, vous allez devoir vous créer un compte !</p>
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{{ path('app_register') }}" role="button">Créer un compte</a> 
+  </p>
+</div>
+</main>
+
+{% endblock %}

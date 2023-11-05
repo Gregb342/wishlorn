@@ -1,0 +1,68 @@
+-- Création de la table User
+CREATE TABLE IF NOT EXISTS `User` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Création de la table VisibilitySetting
+CREATE TABLE IF NOT EXISTS `VisibilitySetting` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `visibilityState` ENUM('private', 'public', 'friends') NOT NULL DEFAULT 'public',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Création de la table Wishlist
+CREATE TABLE IF NOT EXISTS `Wishlist` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `listTitle` VARCHAR(255) NOT NULL,
+  `listDescription` TEXT,
+  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastEditAt` DATETIME ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` INT NOT NULL,
+  `visibilitySetting_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_wishlist_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `User` (`id`)
+    ON DELETE CASCADE,
+  CONSTRAINT `fk_wishlist_visibilitysetting`
+    FOREIGN KEY (`visibilitySetting_id`)
+    REFERENCES `VisibilitySetting` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+-- Création de la table Category
+CREATE TABLE IF NOT EXISTS `Category` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `categoryName` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Création de la table WishlistItem
+CREATE TABLE IF NOT EXISTS `WishlistItem` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `itemName` VARCHAR(255) NOT NULL,
+  `itemCategory` INT,
+  `itemDescription` TEXT,
+  `price` DECIMAL(10,2),
+  `link` VARCHAR(255),
+  `image` VARCHAR(255),
+  `createdAt` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `isActive` BOOLEAN NOT NULL DEFAULT TRUE,
+  `isPurchased` BOOLEAN NOT NULL DEFAULT FALSE,
+  `wishlist_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_wishlistitem_category`
+    FOREIGN KEY (`itemCategory`)
+    REFERENCES `Category` (`id`)
+    ON DELETE SET NULL,
+  CONSTRAINT `fk_wishlistitem_wishlist`
+    FOREIGN KEY (`wishlist_id`)
+    REFERENCES `Wishlist` (`id`)
+    ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
