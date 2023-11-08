@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Wishlist{% endblock %}
+
+{% block body %}
+    <h1>Wishlist</h1>
+
+    <table class="table">
+        <tbody>
+        {% if is_granted("ROLE_ADMIN") %}
+            <tr>
+                <th>Id</th>
+                <td>{{ wishlist.id }}</td>
+            </tr>
+        {% endif %}
+            <tr>
+                <th>Nom</th>
+                <td>{{ wishlist.listTitle }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ wishlist.listDescription }}</td>
+            </tr>
+            <tr>
+                <th>Crée le</th>
+                <td>{{ wishlist.createdAt ? wishlist.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Derniere modification</th>
+                <td>{{ wishlist.lastEditAt ? wishlist.lastEditAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<div class="d-flex justify-content-start">
+  <a href="{{ path('app_wishlist_edit', {'id': wishlist.id}) }}" class="btn btn-success mx-2">Modifier</a>
+  <a href="{{ path('app_wishlist_index') }}" class="btn btn-primary mx-2">Retourner à mes Wishlists !</a>
+  {{ include('wishlist/_delete_form.html.twig') }}
+</div>
+
+
+{% endblock %}

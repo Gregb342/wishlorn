@@ -1,0 +1,5 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-success">{{ button_label|default('Enregistrer') }}</button>
+    <button class="btn btn-primary"><a class="nav-link" href="{{ path('app_wishlist_index') }}">Retour</a></button>
+{{ form_end(form) }}

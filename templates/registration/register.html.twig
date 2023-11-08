@@ -1,24 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Créer un compte{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <div class="container-sm col-6 card shadow py-3">
-    <h1>Register</h1>
+    <h1>Créer un compte sur Wishlorn</h1>
 
     {{ form_errors(registrationForm) }}
 
     {{ form_start(registrationForm) }}
         {{ form_widget(registrationForm) }}
         <div> 
-            <div class="btn btn-success"> 
-                <button type="submit" class="btn btn-success">Register</button>
-            </div>
+            <button type="submit" class="btn btn-success">Créer un compte</button>
         </div>
     {{ form_end(registrationForm) }}
-    </div>
+
 {% endblock %}

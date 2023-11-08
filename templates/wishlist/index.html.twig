@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes wishlists{% endblock %}
+
+{% block body %}
+    <h1>Mes wishlists !</h1>
+
+<div class="container">
+    <div class="row">
+        {% for wishlist in wishlists %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    {% if is_granted("ROLE_ADMIN") %}
+                        <div class="card-header">
+                            ID: {{ wishlist.id }}
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ wishlist.listTitle }}</h5>
+                        <p class="card-text listCard-text">{{ wishlist.listDescription }}</p>
+                        <p class="card-text"><small class="text-muted">Créé le: {{ wishlist.createdAt ? wishlist.createdAt|date('Y-m-d') : '' }}</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ path('app_wishlist_show', {'id': wishlist.id}) }}" class="card-link">Voir</a>
+                        <a href="{{ path('app_wishlist_edit', {'id': wishlist.id}) }}" class="card-link">Modifier</a>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <p class="text-center">Pas de liste disponible 🥺</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+    
+    <a href="{{ path('app_wishlist_new') }}">
+        <button class="btn btn-success">Créer une nouvelle liste 🎉</button> 
+    </a>
+   
+{% endblock %}
+
