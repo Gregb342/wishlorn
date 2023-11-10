@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New WishlistItem{% endblock %}
+
+{% block body %}
+    <h1>Create new WishlistItem</h1>
+
+    {{ include('wishlist_item/includes/_form.html.twig') }}
+
+    <a href="{{ path('app_wishlist_item_index') }}">back to list</a>
+{% endblock %}

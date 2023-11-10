@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\WishlistRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -30,9 +32,13 @@ class Wishlist
     #[ORM\JoinColumn(nullable: false)]
     private ?User $WishlistOwner = null;
 
+    #[ORM\OneToMany(mappedBy: 'wishlist', targetEntity: WishlistItem::class, orphanRemoval: true)]
+    private Collection $wishlistItems;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
+        $this->wishlistItems = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,6 +102,36 @@ class Wishlist
     public function setWishlistOwner(?User $WishlistOwner): static
     {
         $this->WishlistOwner = $WishlistOwner;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, WishlistItem>
+     */
+    public function getWishlistItems(): Collection
+    {
+        return $this->wishlistItems;
+    }
+
+    public function addWishlistItem(WishlistItem $wishlistItem): static
+    {
+        if (!$this->wishlistItems->contains($wishlistItem)) {
+            $this->wishlistItems->add($wishlistItem);
+            $wishlistItem->setWishlist($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWishlistItem(WishlistItem $wishlistItem): static
+    {
+        if ($this->wishlistItems->removeElement($wishlistItem)) {
+            // set the owning side to null (unless already changed)
+            if ($wishlistItem->getWishlist() === $this) {
+                $wishlistItem->setWishlist(null);
+            }
+        }
 
         return $this;
     }

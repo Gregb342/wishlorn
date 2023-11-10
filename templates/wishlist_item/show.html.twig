@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WishlistItem{% endblock %}
+
+{% block body %}
+    <h1>WishlistItem</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ wishlist_item.id }}</td>
+            </tr>
+            <tr>
+                <th>ItemName</th>
+                <td>{{ wishlist_item.itemName }}</td>
+            </tr>
+            <tr>
+                <th>ItemDescription</th>
+                <td>{{ wishlist_item.itemDescription }}</td>
+            </tr>
+            <tr>
+                <th>ItemPrice</th>
+                <td>{{ wishlist_item.itemPrice }}</td>
+            </tr>
+            <tr>
+                <th>ItemUrl</th>
+                <td>{{ wishlist_item.itemUrl }}</td>
+            </tr>
+            <tr>
+                <th>ItemPicture</th>
+                <td>{{ wishlist_item.itemPicture }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ wishlist_item.createdAt ? wishlist_item.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>IsActive</th>
+                <td>{{ wishlist_item.isActive ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsPurchased</th>
+                <td>{{ wishlist_item.isPurchased ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_wishlist_item_index') }}">back to list</a>
+
+    <a href="{{ path('app_wishlist_item_edit', {'id': wishlist_item.id}) }}">edit</a>
+
+    {{ include('wishlist_item/includes/_delete_form.html.twig') }}
+{% endblock %}

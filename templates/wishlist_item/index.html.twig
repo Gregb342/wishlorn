@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}WishlistItem index{% endblock %}
+
+{% block body %}
+    <h1>WishlistItem index</h1>
+{% include 'includes/_card_index.html.twig' %}
+    
+    <a href="{{ path('app_wishlist_item_new') }}">Create new</a>
+{% endblock %}

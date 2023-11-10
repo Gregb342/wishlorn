@@ -1,0 +1,39 @@
+<table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ItemName</th>
+                <th>ItemDescription</th>
+                <th>ItemPrice</th>
+                <th>ItemUrl</th>
+                <th>ItemPicture</th>
+                <th>CreatedAt</th>
+                <th>IsActive</th>
+                <th>IsPurchased</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for wishlist_item in wishlist_items %}
+            <tr>
+                <td>{{ wishlist_item.id }}</td>
+                <td>{{ wishlist_item.itemName }}</td>
+                <td>{{ wishlist_item.itemDescription }}</td>
+                <td>{{ wishlist_item.itemPrice }}</td>
+                <td>{{ wishlist_item.itemUrl }}</td>
+                <td>{{ wishlist_item.itemPicture }}</td>
+                <td>{{ wishlist_item.createdAt ? wishlist_item.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ wishlist_item.isActive ? 'Yes' : 'No' }}</td>
+                <td>{{ wishlist_item.isPurchased ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_wishlist_item_show', {'id': wishlist_item.id}) }}">show</a>
+                    <a href="{{ path('app_wishlist_item_edit', {'id': wishlist_item.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
