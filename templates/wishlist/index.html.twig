@@ -18,7 +18,10 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ wishlist.listTitle }}</h5>
                         <p class="card-text listCard-text">{{ wishlist.listDescription }}</p>
-                        <p class="card-text"><small class="text-muted">Créé le: {{ wishlist.createdAt ? wishlist.createdAt|date('Y-m-d') : '' }}</small></p>
+                        <p class="card-text">
+                            <small class="text-muted">Créé le: {{ wishlist.createdAt ? wishlist.createdAt|date('Y-m-d') : '' }}</small>
+                            <small class="text-muted"> | Créateur : {{ wishlist.getWishlistOwner().getUsername() }}</small>
+                        </p>
                     </div>
                     <div class="card-footer">
                         <a href="{{ path('app_wishlist_show', {'id': wishlist.id}) }}" class="card-link">Voir</a>

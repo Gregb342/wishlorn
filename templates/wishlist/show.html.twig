@@ -29,6 +29,10 @@
                 <th>Derniere modification</th>
                 <td>{{ wishlist.lastEditAt ? wishlist.lastEditAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
+            <tr>
+            <th>Créateur</th>
+            <td>{{ wishlist.getWishlistOwner().getUsername() }}</td>
+            </tr>
         </tbody>
     </table>
 

@@ -26,6 +26,10 @@ class Wishlist
     #[ORM\Column]
     private ?\DateTimeImmutable $lastEditAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'wishlists')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $WishlistOwner = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -80,6 +84,18 @@ class Wishlist
     public function setLastEditAt(\DateTimeImmutable $lastEditAt): static
     {
         $this->lastEditAt = $lastEditAt;
+
+        return $this;
+    }
+
+    public function getWishlistOwner(): ?User
+    {
+        return $this->WishlistOwner;
+    }
+
+    public function setWishlistOwner(?User $WishlistOwner): static
+    {
+        $this->WishlistOwner = $WishlistOwner;
 
         return $this;
     }

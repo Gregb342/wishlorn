@@ -5,7 +5,8 @@ namespace App\Controller;
 use App\Entity\Wishlist;
 use App\Form\WishlistType;
 use App\Repository\WishlistRepository;
-use DateTimeImmutable;
+use function Symfony\Component\Clock\now;
+use Symfony\Bundle\SecurityBundle\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,9 +16,20 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/wishlist')]
 class WishlistController extends AbstractController
 {
+    
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+        // rajouter le service des etats
+    }
+    // Injection de la dépendance security dans le constructeur
+
     #[Route('/', name: 'app_wishlist_index', methods: ['GET'])]
     public function index(WishlistRepository $wishlistRepository): Response
     {
+        
         return $this->render('wishlist/index.html.twig', [
             'wishlists' => $wishlistRepository->findAll(),
         ]);
@@ -26,10 +38,13 @@ class WishlistController extends AbstractController
     #[Route('/new', name: 'app_wishlist_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $wishlistOwner = $this->security->getUser();
+
         $wishlist = new Wishlist();
         $form = $this->createForm(WishlistType::class, $wishlist);
         $form->handleRequest($request);
-        $wishlist->setLastEditAt(new DateTimeImmutable());
+        $wishlist->setLastEditAt(now());
+        $wishlist->setWishlistOwner($wishlistOwner);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($wishlist);
@@ -57,7 +72,7 @@ class WishlistController extends AbstractController
     {
         $form = $this->createForm(WishlistType::class, $wishlist);
         $form->handleRequest($request);        
-        $wishlist->setLastEditAt(new DateTimeImmutable());
+        $wishlist->setLastEditAt(now());
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
